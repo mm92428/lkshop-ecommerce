@@ -1,0 +1,45 @@
+﻿@using FYProject1.Models
+@using FYProject1Classes.ProductMgmt
+
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    List<CameraSummaryModel> cameras = ViewBag.CameraByBrands;
+    Brand brand = ViewBag.brand;
+    ViewBag.Title = brand.Name + " Cameras";
+}
+
+<div class="col-lg-9">
+    <div class="row">
+
+        <img class="img-responsive center-block" src="@Url.Content(brand.Brand_Image)" alt="brandbanner" style="width:auto; height:auto" />
+        <h2 class="text-center notextselect">@brand.Name DSLR Cameras</h2>
+        <hr />
+
+        @if (cameras.Count != 0)
+        {
+            @Html.Partial("~/Views/Shared/_ProductsSummaryView.cshtml", cameras)
+
+        }
+        else
+        {
+            <div class="alert alert-info"><strong>Sorry!</strong> No Items Found</div>
+        }
+
+    </div>
+</div>
+
+@section myScript{
+    <script src="~/Scripts/blazy.min.js"></script>
+    <script type="text/javascript">
+        var bLazy = new Blazy();
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5c5ae1fb7cf662208c944ffe/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+}@* Re-Committed to solve Issue on BitBucket after adding this comment *@

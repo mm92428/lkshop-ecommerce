@@ -1,0 +1,98 @@
+﻿@using FYProject1Classes
+@using FYProject1Classes.CartManagment
+@model IEnumerable<ShoppingCartItem>
+
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2 class="list-group-item-heading text-center notextselect">ViewCart</h2>
+
+<div class="col-lg-9">
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayName("Discount")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th></th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="@Url.Action(" ProductDetail","Home",new { id=item.Id})"><img src="@item.ImageURL" alt="prodimage" style="height: 50px;" /></a>
+                    </td>
+                    <td class="pricetd">
+                        Rs. <b>@($"{item.Price:N0}")</b>
+                    </td>
+                    <td class="saletd">
+                        @item.Sale%
+                    </td>
+                    <td class="cartqtytxt">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td class="amounttd">
+                        Rs. <u>@($"{item.Amount:N0}")</u>
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                        <a style="text-decoration:none" href="@Url.Action("RemoveFromCart",new{ id = item.Id})" class="fa fa-remove fa-2x"></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="col-lg-4 pull-right">
+        <h3><strong>TOTAL: </strong> <u>Rs. @($"{ViewBag.total:N0}")</u></h3>
+        @if (ViewBag.total == 0 || ViewBag.total == null)
+        {
+            <a class="btn btn-danger btn-block disabled" href="#">Buy Something First!</a>
+            <a class="btn btn-default btn-block" href="@Url.Action("Index","Home")">Home</a>
+        }
+        else
+        {
+            <a class="btn btn-default btn-block" href="@Url.Action("Checkout")">CHECKOUT</a>
+        }
+    </div>
+
+</div>
+
+@section myScript{
+    <script type="text/javascript">
+        setTimeout(() => {
+            roar("<strong><u>Notice</u></strong>", "Demo Site For Testing Purpose Only<br/> Not Ready To Shop.", { confirmText: "Close" });
+        }, 5000);
+
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5c5ae1fb7cf662208c944ffe/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+}
